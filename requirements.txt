@@ -1,0 +1,12 @@
+pandas==2.3.3
+numpy==2.3.5
+selenium==4.43.0
+openai==2.32.0
+tqdm==4.67.1
+httpx
+beautifulsoup4
+trafilatura
+extruct
+htmldate
+dateparser
+pycountry==26.2.16

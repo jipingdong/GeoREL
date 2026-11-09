@@ -1,0 +1,61 @@
+{
+  "paths": {
+    "input_dir": "../data/crawl_output/2026/08",
+    "output_dir": "../data/process_files"
+  },
+  "batch_range": {
+    "start": "20260801000000",
+    "end": "20260801234500"
+  },
+  "llm": {
+    "api_key": "",
+    "base_url": "https://api.deepseek.com",
+    "model": "deepseek-flash",
+    "workers": 1000,
+    "attempts": 3,
+    "timeout": 180,
+    "retry_delay": 1
+  },
+  "steps": {
+    "1_enrich_urls_title": {
+      "workers": 4,
+      "write_every": 50,
+      "field_profile": "minimal",
+      "force": false
+    },
+    "2_relevance_filter": {
+      "stage": "all",
+      "title_column": "title",
+      "text_column": "fulltext",
+      "status_column": "extraction_status",
+      "success_status": "ok"
+    },
+    "3_semantic_extraction": {
+      "stage": "all",
+      "temperature": 1
+    },
+    "4_spatiotemporal_extraction": {
+      "stage": "all",
+      "temperature": 1
+    },
+    "5_geocode_locations": {
+      "provider": "nominatim",
+      "endpoint": "https://nominatim.openstreetmap.org/search",
+      "user_agent": "GeoREL/1.0 research geocoder",
+      "rate_limit_seconds": 1,
+      "max_new_queries": null,
+      "attempts": 3,
+      "retry_delay": 1,
+      "timeout": 30,
+      "chunk_size": 128
+    },
+    "6_normalize_countries": {
+      "llm": true,
+      "temperature": 1
+    },
+    "7_finalize_dataset": {
+      "chunksize": 10000,
+      "overwrite": false
+    }
+  }
+}
